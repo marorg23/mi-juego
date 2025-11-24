@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="screen-orientation" content="landscape">
+    <title>Juego de Tradiciones Peruanas</title>
+    <link rel="stylesheet" href="estilos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="pantalla-bienvenida" class="pantalla activa">
+        <div class="fondo-bienvenida"></div>
+        <div class="contenedor-bienvenida">
+            <h1 class="titulo-juego">Manos Sabias</h1>
+            <p>¡Pon a prueba tus conocimientos y conviértete en un maestro de la tradición!</p>
+            <div class="input-container">
+                <label for="nombre-jugador">Tu Nombre:</label>
+                <input type="text" id="nombre-jugador" placeholder="Ingresa tu nombre">
+            </div>
+            <button id="btn-jugar">Jugar</button>
+        </div>
+    </div>
+
+    <div id="pantalla-juego" class="pantalla">
+        <header class="game-header">
+            <span>Jugador: <strong id="nombre-en-juego"></strong></span>
+            <span id="info-nivel">Nivel 1 - Ronda 1</span>
+            <button id="btn-salir" class="btn-salir">Salir</button>
+        </header>
+
+        <div id="nivel1" class="nivel contenedor-nivel">
+            <div class="area-juego" id="area-nivel1">
+                <div class="objetos-mesa" id="objetos-mesa">
+                    </div>
+            </div>
+            <button id="btn-lupa" class="btn-control btn-lupa-flotante"></button>
+        </div>
+
+        <div id="nivel2" class="nivel contenedor-nivel oculto">
+            <div class="area-juego" id="area-nivel2">
+                 <div id="cuerdas"></div>
+                 <div id="panel-carne"></div>
+            </div>
+             <div class="controles-nivel">
+                <button id="btn-verificar-n2" class="btn-control">Verificar Secado</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="pantalla-nivel1-completado" class="pantalla">
+        <div class="contenedor-pantalla-completado">
+            <h2 class="titulo-completado">¡Nivel 1 Completo!</h2>
+            <div class="contenido-pantalla-completado">
+                <p class="mensaje-completado">¡Has ganado la insignia de "Manos Sabias"!</p>
+                <button id="btn-siguiente-nivel2" class="btn-siguiente">Siguiente</button>
+            </div>
+        </div>
+        <button id="btn-salir-completado" class="btn-salir btn-salir-pantalla-completo">Salir</button>
+    </div>
+
+    <div id="modal-resultado" class="modal oculto">
+        <div class="modal-contenido">
+            <h2 id="titulo-modal"></h2>
+            <div id="insignias-modal"></div>
+            <p id="mensaje-modal"></p>
+            <div id="imagen-final-modal"></div>
+            <div class="modal-botones">
+                <button id="btn-repetir" class="oculto">Repetir Nivel</button>
+                <button id="btn-reiniciar">Reiniciar Juego</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="lupa-grande" class="lupa-grande oculto">
+        <img id="imagen-lupa" src="" alt="Zoom">
+    </div>
+
+    <div id="snackbar"></div>
+
+    <script src="juego.js"></script>
+</body>
+</html>

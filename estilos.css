@@ -1,0 +1,397 @@
+/* --- ESTILOS GENERALES Y RESETEO GLOBAL --- */
+* { 
+    box-sizing: border-box; 
+    /* Elimina el recuadro celeste/azul de enfoque en TODOS los elementos */
+    outline: none !important;
+    /* Elimina el color de resaltado al tocar en móviles */
+    -webkit-tap-highlight-color: transparent !important;
+}
+
+html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; }
+body {
+    font-family: var(--fuente-cuerpo);
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* --- VARIABLES DE ESTILO --- */
+:root {
+    --color-primario: #d4a574;
+    --color-secundario: #c0392b;
+    --color-oscuro: #2c3e50;
+    --color-fondo: #ecf0f1;
+    --color-texto: #34495e;
+    --color-exito: #27ae60;
+    --color-error: #e74c3c;
+    --fuente-titulos: 'Bebas Neue', cursive;
+    --fuente-cuerpo: 'Roboto', sans-serif;
+}
+/* --- SISTEMA DE PANTALLAS --- */
+.pantalla {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-in-out;
+    background-color: var(--color-fondo);
+}
+.pantalla.activa { opacity: 1; visibility: visible; }
+
+/* --- PANTALLA DE BIENVENIDA --- */
+.fondo-bienvenida {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('assets/images/mesa.jpg'); 
+    background-size: cover;
+    background-position: center;
+    z-index: 0; 
+}
+.contenedor-bienvenida {
+    position: relative;
+    z-index: 1; 
+    text-align: center;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    max-width: 500px;
+    margin: auto;
+}
+.titulo-juego {
+    font-family: var(--fuente-titulos);
+    font-size: 5rem;
+    color: var(--color-secundario);
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+.input-container { margin: 1.5rem 0; }
+.input-container label { display: block; margin-bottom: 0.5rem; font-weight: bold; }
+#nombre-jugador {
+    width: 80%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+}
+/* Estilos generales para botones */
+button {
+    font-family: var(--fuente-titulos);
+    font-size: 1.5rem;
+    background-color: var(--color-secundario);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+button:hover { background-color: #a93226; transform: translateY(-3px); }
+
+/* --- PANTALLA DE JUEGO --- */
+.game-header {
+    background-color: var(--color-oscuro);
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 10;
+}
+.btn-salir {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--color-error);
+    border-radius: 5px;
+}
+.btn-salir:hover { background-color: #c0392b; }
+.contenedor-nivel {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+.area-juego {
+    flex-grow: 1;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+/* --- ESTILOS NIVEL 1 --- */
+#area-nivel1 { background-image: url('assets/images/mesa.jpg'); }
+.objetos-mesa {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+.objeto-item {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: transform 0.2s, border-color 0.2s;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.objeto-item:hover { transform: scale(1.1); }
+.objeto-item.seleccionado {
+    border-color: var(--color-exito);
+    box-shadow: 0 0 15px var(--color-exito);
+}
+#nivel1 .controles-nivel { display: none; }
+
+/* --- ESTILOS NIVEL 2 --- */
+#area-nivel2 {
+    background-image: url('https://images.pexels.com/photos/1112046/pexels-photo-1112046.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+}
+#cuerdas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.cuerda {
+    position: absolute;
+    width: 150px;
+    height: 5px;
+    background-color: #8B4513;
+    border: 2px dashed #654321;
+}
+.cuerda.correcta { border-color: var(--color-exito); }
+.cuerda.incorrecta-baja { border-color: var(--color-error); }
+.cuerda.incorrecta-sucia { border-color: #95a5a6; }
+.cuerda.incorrecta-arbol { border-color: #f39c12; }
+.cuerda.drag-over {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+}
+#panel-carne {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+.carne-piece {
+    width: 80px;
+    height: 80px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 10px 0;
+    cursor: grab;
+    transition: transform 0.2s;
+}
+.carne-piece:hover { transform: scale(1.1); }
+.carne-piece.dragging {
+    opacity: 0.5;
+    cursor: grabbing;
+}
+
+/* --- CONTROLES Y MODALES --- */
+.controles-nivel {
+    padding: 1rem;
+    background-color: var(--color-oscuro);
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-shrink: 0;
+}
+.btn-control { font-size: 1.2rem; padding: 0.8rem 1.5rem; }
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.modal.oculto { display: none; }
+.modal-contenido {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+#titulo-modal, #titulo-transicion { font-family: var(--fuente-titulos); font-size: 2.5rem; color: var(--color-oscuro); }
+#mensaje-modal, #mensaje-transicion { font-size: 1.2rem; }
+.insignia {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    display: inline-block;
+    background-size: contain;
+}
+#imagen-final-modal img {
+    max-width: 150px;
+    margin: 1rem auto;
+    display: block;
+    border-radius: 10px;
+}
+.modal-botones { margin-top: 1.5rem; }
+.oculto { display: none !important; }
+
+/* --- PANTALLA NIVEL 1 COMPLETADO --- */
+#pantalla-nivel1-completado {
+    /* FIX: Color de respaldo oscuro por si la imagen falla o tarda en cargar */
+    background-color: #2c3e50; 
+    background-image: url('assets/images/fondo_pantalla_nivel1.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative; /* Importante para el posicionamiento absoluto del botón Salir */
+}
+.contenedor-pantalla-completado {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 0 2rem; 
+    width: 100%;
+}
+.titulo-completado {
+    font-family: var(--fuente-titulos);
+    font-size: 3rem;
+    color: white;
+    margin: 0px;
+    padding-top: 20px; 
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    text-align: center;
+}
+.contenido-pantalla-completado {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    text-align: center;
+    padding-bottom: 20px; 
+    margin: 0;
+}
+/* Estilos del mensaje de completado */
+.mensaje-completado {
+    font-family: var(--fuente-cuerpo);
+    font-size: 1.5rem;
+    color: white;
+    margin: 0;
+    margin-bottom: 0px; 
+    background-color: #2c3e50;
+    border-radius: 15px;
+    padding: 8px 15px; 
+    display: inline-block; 
+    max-width: 90%; 
+}
+
+/* Estilo del botón Salir en la pantalla de completado */
+.btn-salir-pantalla-completo {
+    position: absolute; /* Posicionamiento absoluto */
+    top: 20px; /* Separación de 20px del borde superior */
+    right: 20px; /* Separación de 20px del borde derecho */
+    z-index: 10; /* Asegura que esté por encima de otros elementos */
+    
+    /* Hereda los estilos generales de 'button' (rojo, redondo, grande) */
+    /* No necesitamos aplicar 'font-size', 'padding', 'background-color', 'border-radius'
+       aquí porque ya los obtiene de la clase base 'button'. */
+}
+
+
+.btn-siguiente {
+    display: none;
+    margin: 0;
+}
+
+/* --- LUPA --- */
+.lupa-grande {
+    position: fixed;
+    width: 200px;
+    height: 200px;
+    border: 5px solid white;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 999;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+#imagen-lupa { width: 100%; height: 100%; }
+
+/* --- SNACKBAR --- */
+#snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1001;
+    left: 50%;
+    bottom: 30px;
+    opacity: 0;
+    transition: opacity 0.5s, bottom 0.5s ease-in-out;
+}
+#snackbar.show {
+    visibility: visible;
+    opacity: 1;
+    bottom: 50px;
+}
+/* --- ANIMACIÓN DE FALLO --- */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* BOTÓN LUPA TRANSPARENTE */
+#btn-lupa.btn-lupa-flotante {
+    position: absolute;
+    cursor: pointer;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+}
+#btn-lupa.btn-lupa-flotante:hover,
+#btn-lupa.btn-lupa-flotante:active,
+#btn-lupa.btn-lupa-flotante:focus {
+    background-color: transparent !important;
+    transform: none !important; 
+    box-shadow: none !important;
+    outline: none !important;
+}
