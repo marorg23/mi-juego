@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnReiniciar = document.getElementById('btn-reiniciar');
     const btnSalir = document.getElementById('btn-salir');
     const btnSiguienteNivel2 = document.getElementById('btn-siguiente-nivel2');
-    const btnSalirCompletado = document.getElementById('btn-salir-completado'); // <<< NUEVO BOTÓN
+    const btnSalirCompletado = document.getElementById('btn-salir-completado');
 
     const nivel1Div = document.getElementById('nivel1');
     const nivel2Div = document.getElementById('nivel2');
@@ -103,6 +103,31 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     };
 
+    // --- FUNCIONES PARA PANTALLA COMPLETA Y ORIENTACIÓN (AGREGADO) ---
+    function entrarPantallaCompleta(elemento) {
+        if (elemento.requestFullscreen) {
+            elemento.requestFullscreen();
+        } else if (elemento.mozRequestFullScreen) { /* Firefox */
+            elemento.mozRequestFullScreen();
+        } else if (elemento.webkitRequestFullscreen) { /* Chrome, Safari y Opera */
+            elemento.webkitRequestFullscreen();
+        } else if (elemento.msRequestFullscreen) { /* IE/Edge */
+            elemento.msRequestFullscreen();
+        }
+    }
+
+    function bloquearOrientacion() {
+        if (screen.orientation && screen.orientation.lock) {
+            screen.orientation.lock('landscape')
+                .catch(error => {
+                    console.log("No se pudo bloquear la orientación:", error);
+                });
+        } else {
+            console.log("El navegador no soporta la API de bloqueo de orientación.");
+        }
+    }
+
+
     // --- FUNCIONES DE NAVEGACIÓN Y CONTROL ---
     function mostrarPantalla(idPantalla) {
         pantallas.forEach(p => p.classList.remove('activa'));
@@ -121,12 +146,21 @@ document.addEventListener('DOMContentLoaded', () => {
         gameState.seleccionadosNivel1 = [];
         gameState.carnesColocadas = {};
         
+        // Ejecutar las funciones de pantalla completa y orientación
+        entrarPantallaCompleta(document.body);
+        bloquearOrientacion();
+
         nombreEnJuegoSpan.textContent = gameState.nombreJugador;
         mostrarPantalla('pantalla-juego');
         cargarRondaNivel1(gameState.rondaActual);
     }
 
     function reiniciarJuego() {
+        // Al salir o reiniciar, intentar salir de pantalla completa
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        }
+        
         modalResultado.classList.add('oculto');
         pantallaNivel1Completado.classList.add('oculto');
         nivel2Div.classList.add('oculto');
@@ -275,7 +309,9 @@ document.addEventListener('DOMContentLoaded', () => {
             cuerdaDiv.addEventListener('dragover', manejarDragOver);
             cuerdaDiv.addEventListener('drop', manejarDrop);
             cuerdaDiv.addEventListener('dragleave', manejarDragLeave);
-            cuerdaDiv.appendChild(cuerdaDiv);
+            // El appendChild no es necesario aquí si las cuerdas no contienen texto o elementos
+            // cuerdaDiv.appendChild(cuerdaDiv); // <-- Esto estaba mal en el código original, lo he quitado.
+            cuerdasDiv.appendChild(cuerdaDiv); // Agregar la nueva cuerda al div cuerdasDiv
         });
 
         panelCarneDiv.innerHTML = '<h3>Arrastra la carne</h3>';
@@ -387,11 +423,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnVerificarN2.addEventListener('click', verificarRespuestasNivel2);
     btnReiniciar.addEventListener('click', reiniciarJuego);
     btnSalir.addEventListener('click', reiniciarJuego);
-    
-    // <<< NUEVO EVENT LISTENER
-    if (btnSalirCompletado) {
-        btnSalirCompletado.addEventListener('click', reiniciarJuego);
-    }
+    btnSalirCompletado.addEventListener('click', reiniciarJuego); // Botón Salir flotante
     
     btnSiguienteNivel2.addEventListener('click', () => {
         cargarNivel2();

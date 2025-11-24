@@ -83,7 +83,7 @@ body {
     border: 2px solid #ccc;
     border-radius: 8px;
 }
-/* Estilos generales para botones */
+/* Estilos generales para botones (Botón Siguiente/Jugar) */
 button {
     font-family: var(--fuente-titulos);
     font-size: 1.5rem;
@@ -111,6 +111,7 @@ button:hover { background-color: #a93226; transform: translateY(-3px); }
     position: relative;
     z-index: 10;
 }
+/* Estilo específico del botón Salir en la cabecera */
 .btn-salir {
     font-size: 1rem;
     padding: 0.5rem 1rem;
@@ -271,7 +272,7 @@ button:hover { background-color: #a93226; transform: translateY(-3px); }
     background-image: url('assets/images/fondo_pantalla_nivel1.jpg');
     background-size: cover;
     background-position: center;
-    position: relative; /* Importante para el posicionamiento absoluto del botón Salir */
+    position: relative; /* Clave para el posicionamiento absoluto del botón Salir */
 }
 .contenedor-pantalla-completado {
     display: flex;
@@ -305,29 +306,24 @@ button:hover { background-color: #a93226; transform: translateY(-3px); }
     font-size: 1.5rem;
     color: white;
     margin: 0;
-    margin-bottom: 0px; 
+    margin-bottom: 10px; 
     background-color: #2c3e50;
     border-radius: 15px;
-    padding: 8px 15px; 
+    padding: 15px 30px; 
     display: inline-block; 
     max-width: 90%; 
 }
 
-/* Estilo del botón Salir en la pantalla de completado */
+/* Estilo del botón Salir flotante, usando el estilo del botón general (rojo, redondo) */
 .btn-salir-pantalla-completo {
-    position: absolute; /* Posicionamiento absoluto */
-    top: 20px; /* Separación de 20px del borde superior */
-    right: 20px; /* Separación de 20px del borde derecho */
-    z-index: 10; /* Asegura que esté por encima de otros elementos */
-    
-    /* Hereda los estilos generales de 'button' (rojo, redondo, grande) */
-    /* No necesitamos aplicar 'font-size', 'padding', 'background-color', 'border-radius'
-       aquí porque ya los obtiene de la clase base 'button'. */
+    position: absolute; 
+    top: 20px; 
+    right: 20px; 
+    z-index: 10; 
+    /* Hereda los estilos generales del botón */
 }
 
-
 .btn-siguiente {
-    display: none;
     margin: 0;
 }
 
